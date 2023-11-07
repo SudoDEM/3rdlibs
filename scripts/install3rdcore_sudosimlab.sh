@@ -75,5 +75,5 @@ make install
 
 # 8 cp all libraries
 cd $WORKSPACE
-cp -rf HeaderLib/lib/* 3rdlibs/
-cp -r HeaderLib/lib/py/* 3rdlibs/py/
+# cp -rf HeaderLib/lib/* 3rdlibs/
+# cp -r HeaderLib/lib/py/* 3rdlibs/py/
