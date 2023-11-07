@@ -1,0 +1,33 @@
+name: Build 3rdlibs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/**
+
+  # pull_request:
+  #   branches: [master]
+  #   paths:
+  #     - scripts/**
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  buildSudoDEM2D:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: compile 3rdlibs
+      shell: bash
+      run: |
+        cd scripts
+        sh install3rd_base.sh
+        sh install3rdcore_sudosimlab.sh
+
+    - name: upload compiled 3rdlibs
+      uses: actions/upload-artifact@v3
+      with:
+        path: sudodeminstall/*
