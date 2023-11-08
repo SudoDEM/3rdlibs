@@ -1,16 +1,19 @@
 name: Build 3rdlibs
 
+# on:
+#   push:
+#     branches: [main]
+#     paths:
+#       - scripts/**
 on:
-  push:
-    branches: [main]
-    paths:
-      - scripts/**
-
+  release:
+    types: [prereleased]
   # pull_request:
   #   branches: [master]
   #   paths:
   #     - scripts/**
 
+# sh install3rdcore_sudosimlab.sh
 env:
   BUILD_TYPE: Release
 
@@ -29,11 +32,24 @@ jobs:
       run: |
         cd scripts
         sh install3rd_base.sh
-        sh install3rdcore_sudosimlab.sh
+        
+
+    - name: Archive Release
+      working-directory: ${{github.workspace}}/3rdlib/
+      run: |
+          tar cfJ 3rdlibs-${{matrix.os}}.tar.xz HeaderLib
 
     - name: upload compiled 3rdlibs
       uses: actions/upload-artifact@v3
       with:
         name: 3rdlibs-${{matrix.os}}
         path: |
-          ${{github.workspace}}/3rdlib/HeaderLib/
+          ${{github.workspace}}/3rdlib/3rdlibs-${{matrix.os}}.tar.xz
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{github.workspace}}/3rdlib/3rdlibs-${{matrix.os}}.tar.xz
+        tag: ${{ github.ref }}
+        overwrite: true
