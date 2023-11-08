@@ -13,8 +13,7 @@ on:
   #   paths:
   #     - scripts/**
 
-# sh install3rd_base.sh
-# sh install3rdcore_sudosimlab.sh
+
 env:
   BUILD_TYPE: Release
 
@@ -32,10 +31,8 @@ jobs:
       shell: bash
       run: |
         cd scripts
-        cd ..
-        mkdir -p 3rdlib/HeaderLib
-
-        
+        sh install3rd_base.sh
+        sh install3rdcore_sudosimlab.sh
 
     - name: Archive Release
       working-directory: ${{github.workspace}}/3rdlib/
