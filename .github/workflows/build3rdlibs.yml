@@ -35,21 +35,30 @@ jobs:
         sh install3rdcore_sudosimlab.sh
 
     - name: Archive Release
-      working-directory: ${{github.workspace}}/3rdlib/
+      working-directory: ${{github.workspace}}/
       run: |
-          tar cfJ 3rdlibs-${{matrix.os}}.tar.xz HeaderLib
+          tar cfJ 3rdlibs-${{matrix.os}}.tar.xz 3rdlib/HeaderLib
+          tar cfJ tools-${{matrix.os}}.tar.xz SudoDEMTools
 
     - name: upload compiled 3rdlibs
       uses: actions/upload-artifact@v3
       with:
         name: 3rdlibs-${{matrix.os}}
         path: |
-          ${{github.workspace}}/3rdlib/3rdlibs-${{matrix.os}}.tar.xz
+          ${{github.workspace}}/3rdlibs-${{matrix.os}}.tar.xz
+
+    - name: upload compiled tools
+      uses: actions/upload-artifact@v3
+      with:
+        name: tools-${{matrix.os}}
+        path: |
+          ${{github.workspace}}/tools-${{matrix.os}}.tar.xz
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{github.workspace}}/3rdlib/3rdlibs-${{matrix.os}}.tar.xz
+        file: ${{github.workspace}}/*-${{matrix.os}}.tar.xz
         tag: ${{ github.ref }}
         overwrite: true
+        file_glob: true
