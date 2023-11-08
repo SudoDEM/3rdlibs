@@ -36,4 +36,4 @@ jobs:
       with:
         name: 3rdlibs-${{matrix.os}}
         path: |
-          ${{github.workspace}}/HeaderLib/
+          ${{github.workspace}}/3rdlib/HeaderLib/
