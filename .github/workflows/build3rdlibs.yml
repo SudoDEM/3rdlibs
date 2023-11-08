@@ -33,7 +33,7 @@ jobs:
       run: |
         cd scripts
         cd ..
-        mkdir -p 3rdlib/3rdlibs/HeaderLib
+        mkdir -p 3rdlib/HeaderLib
 
         
 
