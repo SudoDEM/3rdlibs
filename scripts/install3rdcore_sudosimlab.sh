@@ -16,10 +16,17 @@ mkdir HeaderLib
 
 # 2 workspace = sudodem_3rdlib
 WORKSPACE=$PWD
+# 2.1 install bzip2
+wget https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
+tar xzf bzip2-1.0.8.tar.gz
+cd bzip2-1.0.8
+make
+make install PREFIX=$WORKSPACE/HeaderLib
 
 # 3 Boost install
 #wget https://www.sudosimlab.com/downloadData/3rdlibs/boost_1_67_0.tar.gz
 #tar xzf boost_1_67_0.tar.gz
+cd $WORKSPACE
 wget https://boostorg.jfrog.io/artifactory/main/release/1.67.0/source/boost_1_67_0.tar.gz
 tar xzf boost_1_67_0.tar.gz
 cd boost_1_67_0
