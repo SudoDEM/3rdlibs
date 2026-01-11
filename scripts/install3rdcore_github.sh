@@ -38,9 +38,9 @@ cd boost-1_6_7-1_6_7
 # 4 Eigen and minieigen
 cd $WORKSPACE
 #wget https://www.sudosimlab.com/downloadData/3rdlibs/eigen-3.3.5.tar.gz
-wget https://github.com/SwaySZ/Eigen-3.3.5/archive/refs/tags/3.3.5.tar.gz
-tar xzf 3.3.5.tar.gz
-mv Eigen-3.3.5-3.3.5 Eigen-3.3.5
+wget https://gitlab.com/libeigen/eigen/-/archive/3.3.5/eigen-3.3.5.tar.gz
+tar xzf eigen-3.3.5.tar.gz
+mv eigen-3.3.5 Eigen-3.3.5
 cp -rf Eigen-3.3.5 HeaderLib/
 
 wget https://github.com/SwaySZ/minieigen/archive/refs/tags/minieigen-1.0.tar.gz
