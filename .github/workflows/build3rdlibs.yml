@@ -50,14 +50,14 @@ jobs:
           tar cfJ tools-${{matrix.os}}.tar.xz SudoDEMTools
 
     - name: upload compiled 3rdlibs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: 3rdlibs-${{matrix.os}}
         path: |
           ${{github.workspace}}/3rdlibs-${{matrix.os}}.tar.xz
 
     - name: upload compiled tools
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: tools-${{matrix.os}}
         path: |
