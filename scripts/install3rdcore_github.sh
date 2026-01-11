@@ -25,25 +25,27 @@ make install PREFIX=$WORKSPACE/HeaderLib
 
 # 3 Boost install
 #wget https://www.sudosimlab.com/downloadData/3rdlibs/boost_1_67_0.tar.gz
-#tar xzf boost_1_67_0.tar.gz
+#tar xzf boost-1_6_7-1_6_7.tar.gz
 cd $WORKSPACE
-wget https://boostorg.jfrog.io/artifactory/main/release/1.67.0/source/boost_1_67_0.tar.gz
-tar xzf boost_1_67_0.tar.gz
-cd boost_1_67_0
+#wget https://boostorg.jfrog.io/artifactory/main/release/1.67.0/source/boost_1_67_0.tar.gz
+wget https://github.com/SwaySZ/boost-1_6_7/archive/refs/tags/1_6_7.tar.gz
+tar xzf boost-1_6_7-1_6_7.tar.gz
+cd boost-1_6_7-1_6_7
 ./bootstrap.sh  --with-libraries=python,thread,filesystem,iostreams,regex,serialization,system,date_time link=shared runtime-link=shared --without-icu --with-python=python3
 ./b2 −j4 #compile with 3 threads
 ./b2 install --prefix=$WORKSPACE/HeaderLib
 
 # 4 Eigen and minieigen
 cd $WORKSPACE
-wget https://www.sudosimlab.com/downloadData/3rdlibs/eigen-3.3.5.tar.gz
-tar xzf eigen-3.3.5.tar.gz
-mv eigen-git-mirror-3.3.5 Eigen-3.3.5
+#wget https://www.sudosimlab.com/downloadData/3rdlibs/eigen-3.3.5.tar.gz
+wget https://github.com/SwaySZ/Eigen-3.3.5/archive/refs/tags/3.3.5.tar.gz
+tar xzf Eigen-3.3.5-3.3.5.tar.gz
+mv Eigen-3.3.5-3.3.5 Eigen-3.3.5
 cp -rf Eigen-3.3.5 HeaderLib/
 
-wget https://www.sudosimlab.com/downloadData/3rdlibs/minieigen_1_py3.tar.xz
-tar xf minieigen_1_py3.tar.xz
-cd minieigen_1_py3
+wget https://github.com/SwaySZ/minieigen/archive/refs/tags/minieigen-1.0.tar.gz
+tar xzf minieigen-minieigen-1.0.tar.gz
+cd minieigen-minieigen-1.0
 mkdir build
 cd build 
 cmake .. -DCMAKE_INSTALL_PREFIX=$WORKSPACE/HeaderLib/lib/py
@@ -52,8 +54,8 @@ make install
 
 # 5 LibQGLViewer-2.6.3
 cd $WORKSPACE
-wget https://www.sudosimlab.com/downloadData/3rdlibs/libQGLViewer-2.6.3.tar.gz
-tar xzf libQGLViewer-2.6.3.tar.gz
+wget https://github.com/SwaySZ/libQGLViewer-2.6.3/archive/refs/tags/2.6.3.tar.gz
+tar xzf libQGLViewer-2.6.3-2.6.3.tar.gz
 cd libQGLViewer-2.6.3-2.6.3/QGLViewer
 qmake 
 make
