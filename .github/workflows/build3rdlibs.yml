@@ -73,7 +73,7 @@ jobs:
         tar xzf 1_6_7.tar.gz
         cd boost-1_6_7-1_6_7
         ./bootstrap.sh  --with-libraries=python,thread,filesystem,iostreams,regex,serialization,system,date_time link=shared runtime-link=shared --without-icu --with-python=python3
-        ./b2 −j4 #compile with 3 threads
+        ./b2 #−j4 #compile with 3 threads
         ./b2 install --prefix=${{github.workspace}}/3rdlib/HeaderLib
 
     - name: 4 Eigen and minieigen
@@ -90,7 +90,7 @@ jobs:
         mkdir build
         cd build
         cmake .. -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/3rdlib/HeaderLib/lib/py
-        make -j4
+        make #-j4
         make install
 
     - name: 5 LibQGLViewer-2.6.3
@@ -113,7 +113,7 @@ jobs:
         cd sip_4_19_13
         mkdir -p ${{github.workspace}}/SudoDEMTools/sip/sip2pyqt
         python3 configure.py --sip-module=PyQt5.sip --bindir=${{github.workspace}}/SudoDEMTools/sip/bin --destdir=$WORKSPACE/HeaderLib/lib/py --incdir=$WORKSPACE/../SudoDEMTools/sip/include --sipdir=$WORKSPACE/../SudoDEMTools/sip/sip2pyqt
-        make -j4
+        make #-j4
         make install
 
     - name: 7 PyQt5
@@ -124,7 +124,7 @@ jobs:
         tar xf pyqt_5_11_3.tar.xz
         cd pyqt_5_11_3
         python3 configure.py --qmake=/usr/bin/qmake --sip=${{github.workspace}}/SudoDEMTools/sip/bin/sip --sip-incdir=$WORKSPACE/../SudoDEMTools/sip/include --bindir=$WORKSPACE/../SudoDEMTools/PyQt5/bin --designer-plugindir=$WORKSPACE/../SudoDEMTools/PyQt5/plugin --sipdir=$WORKSPACE/../SudoDEMTools/sip/sip2pyqt --destdir=$WORKSPACE/HeaderLib/lib/py --stubsdir=$WORKSPACE/../SudoDEMTools/PyQt5/stubs --qml-plugindir=$WORKSPACE/../SudoDEMTools/PyQt5/qml --confirm-license
-        make -j4
+        make #-j4
         make install
 
     - name: Archive Release
