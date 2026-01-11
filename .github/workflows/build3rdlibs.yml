@@ -132,10 +132,10 @@ jobs:
           --confirm-license \
           --qmake /usr/bin/qmake \
           --target-dir ${{github.workspace}}/HeaderLib/lib/py \
-          --bin-dir ${{github.workspace}}/SudoDEMTools/PyQt5/bin \
+          --scripts-dir ${{github.workspace}}/SudoDEMTools/PyQt5/bin \
+          --stubs-dir ${{github.workspace}}/SudoDEMTools/PyQt5/stubs \
           --designer-plugindir ${{github.workspace}}/SudoDEMTools/PyQt5/plugin \
           --qml-plugindir ${{github.workspace}}/SudoDEMTools/PyQt5/qml \
-          --stubs-dir ${{github.workspace}}/SudoDEMTools/PyQt5/stubs \
           --no-tools
 
 
