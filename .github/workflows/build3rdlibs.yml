@@ -59,6 +59,7 @@ jobs:
     - name: 2 install bzip2
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
+      if: 0
       run: |
         #wget https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
         wget https://github.com/SwaySZ/thirdsource/releases/latest/download/bzip2-1.0.8.tar.gz
@@ -70,6 +71,7 @@ jobs:
     - name: 3 Boost install
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
+      if: 0
       run: |
         wget https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.gz
         tar xzf boost_1_90_0.tar.gz
@@ -81,6 +83,7 @@ jobs:
     - name: 4 Eigen and minieigen
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
+      if: 0
       run: |
         #wget https://gitlab.com/libeigen/eigen/-/archive/3.3.5/eigen-3.3.5.tar.gz
         wget https://github.com/SwaySZ/thirdsource/releases/latest/download/eigen-3.3.5.tar.gz
@@ -99,6 +102,7 @@ jobs:
     - name: 5 LibQGLViewer-2.6.3
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
+      if: 0
       run: |
         wget https://github.com/SwaySZ/libQGLViewer-2.6.3/archive/refs/tags/2.6.3.tar.gz
         tar xzf 2.6.3.tar.gz
@@ -129,7 +133,6 @@ jobs:
         tar xzf PyQt5-5.15.11.tar.gz
         cd PyQt5-5.15.11
         # Use the modern SIP-based installer for PyQt5
-        python3 -m pip install sip-install # Requirement for building
         sip-install \
           --target-dir ${{github.workspace}}/HeaderLib/lib/py \
           --confirm-license \
