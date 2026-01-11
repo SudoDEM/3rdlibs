@@ -73,7 +73,7 @@ jobs:
         #tar xzf 1_6_7.tar.gz
         #cd boost-1_6_7-1_6_7
         wget https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.gz
-        tar xzf boost_1_76_0.tar.gz
+        tar xzf boost_1_90_0.tar.gz
         cd boost_1_90_0
         ./bootstrap.sh  --with-libraries=python,thread,filesystem,iostreams,regex,serialization,system,date_time link=shared runtime-link=shared --without-icu --with-python=python3
         ./b2 #−j4 #compile with 3 threads
