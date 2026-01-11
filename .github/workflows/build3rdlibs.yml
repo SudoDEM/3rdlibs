@@ -85,7 +85,8 @@ jobs:
       run: |
         wget https://github.com/SwaySZ/Eigen-3.3.5/archive/refs/tags/3.3.5.tar.gz
         tar xzf 3.3.5.tar.gz
-        mv Eigen-3.3.5-3.3.5 Eigen-3.3.5
+        mkdir Eigen-3.3.5
+        mv Eigen-3.3.5-3.3.5 Eigen-3.3.5/Eigen
         cp -rf Eigen-3.3.5 ./HeaderLib/
         wget https://github.com/SwaySZ/minieigen/archive/refs/tags/v2026.1.11.tar.gz
         tar xzf v2026.1.11.tar.gz
