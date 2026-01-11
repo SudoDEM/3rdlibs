@@ -45,6 +45,7 @@ jobs:
         qtbase5-dev qt5-qmake libqt5svg5-dev \
         libqt5webkit5-dev libqt5designer5
         python3 -m pip install numpy matplotlib xlib ipython
+        pip install --upgrade setuptools
         
     - name: 1 create the 3rdlib dir
       shell: bash
