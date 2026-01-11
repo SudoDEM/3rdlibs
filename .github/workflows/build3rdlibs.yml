@@ -37,7 +37,7 @@ jobs:
     - name: compile 3rdlibs
       shell: bash
       run: |
-        apt-get update
+        sudo apt-get update
         cd scripts
         sh install3rd_base.sh
         sh install3rdcore_github.sh
