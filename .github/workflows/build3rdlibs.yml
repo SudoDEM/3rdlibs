@@ -87,9 +87,9 @@ jobs:
         tar xzf 3.3.5.tar.gz
         mv Eigen-3.3.5-3.3.5 Eigen-3.3.5
         cp -rf Eigen-3.3.5 ./HeaderLib/
-        wget https://github.com/SwaySZ/minieigen/archive/refs/tags/minieigen-1.0.tar.gz
-        tar xzf minieigen-1.0.tar.gz
-        cd minieigen-minieigen-1.0
+        wget https://github.com/SwaySZ/minieigen/archive/refs/tags/v2026.1.11.tar.gz
+        tar xzf v2026.1.11.tar.gz
+        cd minieigen-2026.1.11
         mkdir build
         cd build
         cmake .. -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/3rdlib/HeaderLib/lib/py
