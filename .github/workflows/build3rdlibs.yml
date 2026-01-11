@@ -16,7 +16,7 @@ on:
 
 env:
   BUILD_TYPE: Release
-
+  WORKSPACE: ${{github.workspace}}/3rdlib
 jobs:
   build-3rdlibs:
     runs-on: ${{ matrix.os }}
@@ -41,11 +41,104 @@ jobs:
         cd scripts
         sh install3rd_base.sh
         sh install3rdcore_github.sh
+        
+    - name: Install3rd base
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+        build-essential cmake zlib1g-dev \
+        freeglut3-dev libbz2-dev libglib2.0 \
+        python3-dev python3-pip python3-tk  \
+        qtbase5-dev qt5-qmake libqt5svg5-dev \
+        libqt5webkit5-dev libqt5designer5
+        python3 -m pip install numpy matplotlib xlib ipython
+        
+    - name: 1 create the 3rdlib dir
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: |
+        mkdir 3rdlib
+        cd 3rdlib
+        mkdir -p 3rdlibs/py
+        mkdir HeaderLib    
+
+    - name: 2 install bzip2
+      shell: bash
+      working-directory: $WORKSPACE
+      run: |
+        wget https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
+        tar xzf bzip2-1.0.8.tar.gz
+        cd bzip2-1.0.8
+        make
+        make install PREFIX=$WORKSPACE/HeaderLib
+
+    - name: 3 Boost install
+      shell: bash
+      working-directory: $WORKSPACE
+      run: |
+        wget https://github.com/SwaySZ/boost-1_6_7/archive/refs/tags/1_6_7.tar.gz
+        tar xzf boost-1_6_7-1_6_7.tar.gz
+        cd boost-1_6_7-1_6_7
+        ./bootstrap.sh  --with-libraries=python,thread,filesystem,iostreams,regex,serialization,system,date_time link=shared runtime-link=shared --without-icu --with-python=python3
+        ./b2 −j4 #compile with 3 threads
+        ./b2 install --prefix=$WORKSPACE/HeaderLib
+
+    - name: 4 Eigen and minieigen
+      shell: bash
+      working-directory: $WORKSPACE
+      run: |
+        wget https://github.com/SwaySZ/Eigen-3.3.5/archive/refs/tags/3.3.5.tar.gz
+        tar xzf Eigen-3.3.5-3.3.5.tar.gz
+        mv Eigen-3.3.5-3.3.5 Eigen-3.3.5
+        cp -rf Eigen-3.3.5 ./HeaderLib/
+        wget https://github.com/SwaySZ/minieigen/archive/refs/tags/minieigen-1.0.tar.gz
+        tar xzf minieigen-minieigen-1.0.tar.gz
+        cd minieigen-minieigen-1.0
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=$WORKSPACE/HeaderLib/lib/py
+        make -j4
+        make install
+
+    - name: 5 LibQGLViewer-2.6.3
+      shell: bash
+      working-directory: $WORKSPACE
+      run: |
+        wget https://github.com/SwaySZ/libQGLViewer-2.6.3/archive/refs/tags/2.6.3.tar.gz
+        tar xzf libQGLViewer-2.6.3-2.6.3.tar.gz
+        cd libQGLViewer-2.6.3-2.6.3/QGLViewer
+        qmake
+        make
+        make install
+
+    - name: 6 Sip
+      shell: bash
+      working-directory: $WORKSPACE
+      run: |
+        wget https://www.sudosimlab.com/downloadData/3rdlibs/sip_4_19_13.tar.xz
+        tar xf sip_4_19_13.tar.xz
+        cd sip_4_19_13
+        mkdir -p $WORKSPACE/../SudoDEMTools/sip/sip2pyqt
+        python3 configure.py --sip-module=PyQt5.sip --bindir=$WORKSPACE/../SudoDEMTools/sip/bin --destdir=$WORKSPACE/HeaderLib/lib/py --incdir=$WORKSPACE/../SudoDEMTools/sip/include --sipdir=$WORKSPACE/../SudoDEMTools/sip/sip2pyqt
+        make -j4
+        make install
+
+    - name: 7 PyQt5
+      shell: bash
+      working-directory: $WORKSPACE
+      run: |
+        wget https://www.sudosimlab.com/downloadData/3rdlibs/pyqt_5_11_3.tar.xz
+        tar xf pyqt_5_11_3.tar.xz
+        cd pyqt_5_11_3
+        python3 configure.py --qmake=/usr/bin/qmake --sip=$WORKSPACE/../SudoDEMTools/sip/bin/sip --sip-incdir=$WORKSPACE/../SudoDEMTools/sip/include --bindir=$WORKSPACE/../SudoDEMTools/PyQt5/bin --designer-plugindir=$WORKSPACE/../SudoDEMTools/PyQt5/plugin --sipdir=$WORKSPACE/../SudoDEMTools/sip/sip2pyqt --destdir=$WORKSPACE/HeaderLib/lib/py --stubsdir=$WORKSPACE/../SudoDEMTools/PyQt5/stubs --qml-plugindir=$WORKSPACE/../SudoDEMTools/PyQt5/qml --confirm-license
+        make -j4
+        make install
 
     - name: Archive Release
       working-directory: ${{github.workspace}}/
       run: |
-          tar cfJ 3rdlibs-${{matrix.os}}.tar.xz 3rdlib/HeaderLib
+          tar cfJ 3rdlibs-${{matrix.os}}.tar.xz $WORKSPACE/HeaderLib
           tar cfJ tools-${{matrix.os}}.tar.xz SudoDEMTools
 
     - name: upload compiled 3rdlibs
