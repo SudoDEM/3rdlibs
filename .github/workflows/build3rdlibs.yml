@@ -59,7 +59,6 @@ jobs:
     - name: 2 install bzip2
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
-      if: 0
       run: |
         #wget https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
         wget https://github.com/SwaySZ/thirdsource/releases/latest/download/bzip2-1.0.8.tar.gz
@@ -71,7 +70,6 @@ jobs:
     - name: 3 Boost install
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
-      if: 0
       run: |
         wget https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.gz
         tar xzf boost_1_90_0.tar.gz
@@ -83,7 +81,6 @@ jobs:
     - name: 4 Eigen and minieigen
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
-      if: 0
       run: |
         #wget https://gitlab.com/libeigen/eigen/-/archive/3.3.5/eigen-3.3.5.tar.gz
         wget https://github.com/SwaySZ/thirdsource/releases/latest/download/eigen-3.3.5.tar.gz
@@ -102,7 +99,6 @@ jobs:
     - name: 5 LibQGLViewer-2.6.3
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
-      if: 0
       run: |
         wget https://github.com/SwaySZ/libQGLViewer-2.6.3/archive/refs/tags/2.6.3.tar.gz
         tar xzf 2.6.3.tar.gz
@@ -119,7 +115,6 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install "sip>=6.0" "PyQt-builder>=1.10" "PyQt5-sip"
         
-        #python3 -m pip install --upgrade pip build
         #wget https://github.com/SwaySZ/thirdsource/releases/latest/download/sip-6.15.1.tar.gz
         #tar xzf sip-6.15.1.tar.gz
         #cd ${{github.workspace}}/3rdlib/sip-6.15.1
@@ -134,10 +129,15 @@ jobs:
         cd PyQt5-5.15.11
         # Use the modern SIP-based installer for PyQt5
         sip-install \
-          --target-dir ${{github.workspace}}/HeaderLib/lib/py \
           --confirm-license \
-          --no-designer-plugin \
-          --qmake /usr/bin/qmake
+          --qmake /usr/bin/qmake \
+          --target-dir ${{github.workspace}}/HeaderLib/lib/py \
+          --bin-dir ${{github.workspace}}/SudoDEMTools/PyQt5/bin \
+          --designer-plugindir ${{github.workspace}}/SudoDEMTools/PyQt5/plugin \
+          --qml-plugindir ${{github.workspace}}/SudoDEMTools/PyQt5/qml \
+          --stubs-dir ${{github.workspace}}/SudoDEMTools/PyQt5/stubs \
+          --no-tools
+
 
     - name: Archive Release
       working-directory: ${{github.workspace}}/
