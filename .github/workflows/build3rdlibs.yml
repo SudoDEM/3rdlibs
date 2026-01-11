@@ -113,30 +113,11 @@ jobs:
       run: |
         # 1. Install modern build tools required for PyQt5 5.15+
         python3 -m pip install --upgrade pip
-        python3 -m pip install "sip>=6.0" "PyQt-builder>=1.10" "PyQt5-sip"
-        
-        #wget https://github.com/SwaySZ/thirdsource/releases/latest/download/sip-6.15.1.tar.gz
-        #tar xzf sip-6.15.1.tar.gz
-        #cd ${{github.workspace}}/3rdlib/sip-6.15.1
-        ## Modern SIP 6 build and installation to your custom path
-        #python3 -m pip install . --target=${{github.workspace}}/HeaderLib/lib/py
-        ## Ensure the 'sip' executable is available for PyQt5
-        #echo "${{github.workspace}}/HeaderLib/lib/py/bin" >> $GITHUB_PATH
-        ## PYQT5
-        cd ${{github.workspace}}/3rdlib
-        wget https://github.com/SwaySZ/thirdsource/releases/latest/download/PyQt5-5.15.11.tar.gz
-        tar xzf PyQt5-5.15.11.tar.gz
-        cd PyQt5-5.15.11
-        # Use the modern SIP-based installer for PyQt5
-        sip-install \
-          --confirm-license \
-          --qmake /usr/bin/qmake \
-          --target-dir ${{github.workspace}}/HeaderLib/lib/py \
-          --scripts-dir ${{github.workspace}}/SudoDEMTools/PyQt5/bin \
-          --stubs-dir ${{github.workspace}}/SudoDEMTools/PyQt5/stubs \
-          --designer-plugindir ${{github.workspace}}/SudoDEMTools/PyQt5/plugin \
-          --qml-plugindir ${{github.workspace}}/SudoDEMTools/PyQt5/qml \
-          --no-tools
+        #pip install "sip>=6.0" "PyQt-builder>=1.10" "PyQt5-sip"
+        # Install the runtime module to your target directory
+        pip install "PyQt5-sip" --target=${{github.workspace}}/HeaderLib/lib/py
+        # Install PyQt5 to the same target directory
+        pip install pyqt5 --target=${{github.workspace}}/HeaderLib/lib/py
 
 
     - name: Archive Release
