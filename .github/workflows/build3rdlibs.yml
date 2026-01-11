@@ -107,29 +107,20 @@ jobs:
         make
         make install
 
-    - name: 6 Sip
+    - name: 6 Sip and PyQt5
       shell: bash
       working-directory: ${{github.workspace}}/3rdlib
       run: |
         python3 -m pip install --upgrade pip build
         wget https://github.com/SwaySZ/thirdsource/releases/latest/download/sip-6.15.1.tar.gz
         tar xzf sip-6.15.1.tar.gz
-        cd sip-6.15.1
+        cd ${{github.workspace}}/3rdlib/sip-6.15.1
         # Modern SIP 6 build and installation to your custom path
         python3 -m pip install . --target=${{github.workspace}}/HeaderLib/lib/py
         # Ensure the 'sip' executable is available for PyQt5
         echo "${{github.workspace}}/HeaderLib/lib/py/bin" >> $GITHUB_PATH
-        
-        #mkdir -p ${{github.workspace}}/SudoDEMTools/sip/sip2pyqt
-        #python3 configure.py --sip-module=PyQt5.sip --bindir=${{github.workspace}}/SudoDEMTools/sip/bin --destdir=${{github.workspace}}/3rdlib/HeaderLib/lib/py --incdir=${{github.workspace}}/SudoDEMTools/sip/include --sipdir=${{github.workspace}}/SudoDEMTools/sip/sip2pyqt
-        #make #-j4
-        #make install
-
-    - name: 7 PyQt5
-      shell: bash
-      working-directory: ${{github.workspace}}/3rdlib
-      run: |
-
+        ## PYQT5
+        cd ${{github.workspace}}/3rdlib
         wget https://github.com/SwaySZ/thirdsource/releases/latest/download/PyQt5-5.15.11.tar.gz
         tar xzf PyQt5-5.15.11.tar.gz
         cd PyQt5-5.15.11
@@ -141,8 +132,6 @@ jobs:
           --no-designer-plugin \
           --qmake /usr/bin/qmake
         #python3 configure.py --qmake=/usr/bin/qmake --sip=${{github.workspace}}/SudoDEMTools/sip/bin/sip --sip-incdir=$WORKSPACE/../SudoDEMTools/sip/include --bindir=$WORKSPACE/../SudoDEMTools/PyQt5/bin --designer-plugindir=$WORKSPACE/../SudoDEMTools/PyQt5/plugin --sipdir=$WORKSPACE/../SudoDEMTools/sip/sip2pyqt --destdir=$WORKSPACE/HeaderLib/lib/py --stubsdir=$WORKSPACE/../SudoDEMTools/PyQt5/stubs --qml-plugindir=$WORKSPACE/../SudoDEMTools/PyQt5/qml --confirm-license
-        #make #-j4
-        #make install
 
     - name: Archive Release
       working-directory: ${{github.workspace}}/
